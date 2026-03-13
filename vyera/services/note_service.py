@@ -23,7 +23,7 @@ def get_notes():
     
     return notes
 
-def get_note_by_id(note_id):
+def get_notes_by_id(note_id):
     conn = get_connection()
     cursor = conn.cursor()
     
@@ -57,7 +57,15 @@ def update_note(note_id, new_title=None, new_content=None):
         conn.close()
         return "Nothing to update"
     
+def get_notes_by_folder(folder_id):
+    conn = get_connection()
+    cursor = conn.cursor()
     
+    cursor.execute("Select * from notes where folder_id = ?",(folder_id,))
+    
+    notes = cursor.fetchall()
+    conn.close()
+    return notes    
 
 def delete_note(note_id):
     conn = get_connection()
